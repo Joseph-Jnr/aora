@@ -1,5 +1,10 @@
 import { useRef } from 'react'
-import { Animated, Text, TouchableOpacity } from 'react-native'
+import {
+  ActivityIndicator,
+  Animated,
+  Text,
+  TouchableOpacity,
+} from 'react-native'
 
 interface CustomButtonProps {
   title: string
@@ -47,9 +52,13 @@ const CustomButton = ({
         }`}
         disabled={isLoading}
       >
-        <Text className={`text-primary font-psemibold text-lg ${textStyles}`}>
-          {title}
-        </Text>
+        {isLoading ? (
+          <ActivityIndicator size='small' color='#fff' />
+        ) : (
+          <Text className={`text-primary font-psemibold text-lg ${textStyles}`}>
+            {title}
+          </Text>
+        )}
       </TouchableOpacity>
     </Animated.View>
   )
