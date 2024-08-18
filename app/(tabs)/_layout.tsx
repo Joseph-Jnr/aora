@@ -1,37 +1,120 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { View, Text, Image } from 'react-native'
+import React from 'react'
+import { Tabs } from 'expo-router'
+import { icons } from '@/constants'
 
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
-  return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
-          ),
-        }}
-      />
-    </Tabs>
-  );
+interface TabIconProps {
+  icon: any
+  color: any
+  name: string
+  focused: boolean
 }
+
+const TabIcon = ({ icon, color, name, focused }: TabIconProps) => {
+  return (
+    <View className='items-center justity-center gap-2'>
+      <Image
+        source={icon}
+        resizeMode='contain'
+        tintColor={color}
+        className='w-6 h-6'
+      />
+      <Text
+        className={`${focused ? 'font-psemibold' : 'font-pregular'} text-xs`}
+        style={{ color: color }}
+      >
+        {name}
+      </Text>
+    </View>
+  )
+}
+
+const TabsLayout = () => {
+  return (
+    <>
+      {/* Home */}
+      <Tabs
+        screenOptions={{
+          tabBarShowLabel: false,
+          tabBarActiveTintColor: '#FFA001',
+          tabBarInactiveTintColor: '#CDCDE0',
+          tabBarStyle: {
+            backgroundColor: '#161622',
+            borderTopWidth: 1,
+            borderTopColor: '#232533',
+            height: 84,
+          },
+        }}
+      >
+        <Tabs.Screen
+          name='home'
+          options={{
+            title: 'Home',
+            headerShown: false,
+            tabBarIcon: ({ focused, color }) => (
+              <TabIcon
+                icon={icons.home}
+                color={color}
+                name='Home'
+                focused={focused}
+              />
+            ),
+          }}
+        />
+
+        {/* Create */}
+        <Tabs.Screen
+          name='create'
+          options={{
+            title: 'Create',
+            headerShown: false,
+            tabBarIcon: ({ focused, color }) => (
+              <TabIcon
+                icon={icons.plus}
+                color={color}
+                name='Create'
+                focused={focused}
+              />
+            ),
+          }}
+        />
+
+        {/* Profile */}
+        <Tabs.Screen
+          name='profile'
+          options={{
+            title: 'Profile',
+            headerShown: false,
+            tabBarIcon: ({ focused, color }) => (
+              <TabIcon
+                icon={icons.profile}
+                color={color}
+                name='Profile'
+                focused={focused}
+              />
+            ),
+          }}
+        />
+
+        {/* Saved */}
+        <Tabs.Screen
+          name='bookmark'
+          options={{
+            title: 'Saved',
+            headerShown: false,
+            tabBarIcon: ({ focused, color }) => (
+              <TabIcon
+                icon={icons.bookmark}
+                color={color}
+                name='Saved'
+                focused={focused}
+              />
+            ),
+          }}
+        />
+      </Tabs>
+    </>
+  )
+}
+
+export default TabsLayout
